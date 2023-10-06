@@ -29,7 +29,7 @@ public class Main {
         frame.setVisible(true);
 
         TempString[TextLine] = new StringBuffer("");
-        Timer timer = new Timer(60/1000, e -> {
+        Timer timer = new Timer(30/1000, e -> {
             panel.repaint();
         });
         Timer KickShow = new Timer(800, e -> {
@@ -85,7 +85,6 @@ public class Main {
                             }
                             //返回上一行
                             if (TextLine>0 && KickNow==0){
-                                TempString[TextLine-1].delete(TempString[TextLine-1].length()-1,TempString[TextLine-1].length());
                                 KickNow = TempString[TextLine-1].length();
                                 TempString[TextLine-1].append(TempString[TextLine]);
                                 TempString[TextLine] = null;
@@ -110,10 +109,29 @@ public class Main {
                             break;
                             //回车
                         case KeyEvent.VK_ENTER:
-                            TempString[TextLine].append("\n");
-                            KickNow=0;
-                            TempString[TextLine+1] = new StringBuffer("");
+                            if (TempString[TextLine+1] == null){
+                                TempString[TextLine+1] = new StringBuffer("");
+                            }
+                                TempString[TextLine+1].append(TempString[TextLine].substring(KickNow,TempString[TextLine].length()));
+                            TempString[TextLine].delete(KickNow, TempString[TextLine].length());
+                            KickNow=TempString[TextLine+1].length();
                             TextLine++;
+                            break;
+                        case KeyEvent.VK_UP:
+                           if (TextLine>0){
+                               if (KickNow > TempString[TextLine-1].length()){
+                                   KickNow=TempString[TextLine-1].length();
+                               }
+                               TextLine--;
+                           }
+                            break;
+                        case KeyEvent.VK_DOWN:
+                                if (KickNow > TempString[TextLine+1].length()){
+                                    KickNow=TempString[TextLine+1].length();
+                                }
+                                TextLine++;
+
+                            break;
                     }
                     System.out.println(KickNow);
 
