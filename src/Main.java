@@ -1,11 +1,8 @@
-import javafx.scene.input.KeyCode;
-import jdk.internal.util.xml.impl.Input;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Dimension2D;
 
 public class Main {
     static StringBuffer[] TempString = new StringBuffer[100];
