@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class Main {
     static StringBuffer[] TempString = new StringBuffer[100];
+    static int Hz = 30;
     static JFrame frame;
     static int TextLine =0;
     static int KickNow =0;
@@ -29,7 +30,7 @@ public class Main {
         frame.setVisible(true);
 
         TempString[TextLine] = new StringBuffer("");
-        Timer timer = new Timer(30/1000, e -> {
+        Timer timer = new Timer(Hz/1000, e -> {
             panel.repaint();
         });
         Timer KickShow = new Timer(800, e -> {
@@ -126,10 +127,12 @@ public class Main {
                            }
                             break;
                         case KeyEvent.VK_DOWN:
-                                if (KickNow > TempString[TextLine+1].length()){
-                                    KickNow=TempString[TextLine+1].length();
+                                if (TempString[TextLine+1]!=null) {
+                                    if (KickNow > TempString[TextLine + 1].length()) {
+                                        KickNow = TempString[TextLine + 1].length();
+                                    }
+                                    TextLine++;
                                 }
-                                TextLine++;
 
                             break;
                     }
