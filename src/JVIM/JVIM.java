@@ -253,7 +253,7 @@ public class JVIM {
         }
         return false;
     }
-    private static int nowShowHow(){
+    public static int nowShowHow(){
         int s = 0;
         for (int i=0;i<=TempString.length;i++){
             if (TempString[i] == null){
