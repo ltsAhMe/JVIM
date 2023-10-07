@@ -1,10 +1,15 @@
+package JVIM;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-public class Main {
+import java.util.Collections;
+import JVIM.Commend.commend;
+public class JVIM {
+    static StringBuffer CommendInput = new StringBuffer("");
+    static Boolean isCommendInput = false;
     static StringBuffer[] TempString = new StringBuffer[100];
     static int Hz = 30;
     static JFrame frame;
@@ -19,6 +24,7 @@ public class Main {
         init("JVIM - swing",new Dimension(500,400));
     }
     public static void init(String title, Dimension Size){
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
         frame = new JFrame(title);
         panel = getPanel();
         PanelgetKey();
@@ -38,6 +44,9 @@ public class Main {
         });
         timer.start();
         KickShow.start();
+    }
+    public static StringBuffer[] getTempStr(){
+        return TempString;
     }
    private static JPanel getPanel(){
         return new JPanel(){
@@ -64,7 +73,24 @@ public class Main {
                         g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 5+ (TextLine*fontMetrics.getHeight()), 2, 18);
                     }
                 }
-                //
+                //mode show
+                if (!isInput){
+                    g2d.setColor(Color.white);
+                    g2d.fillRect(0,frame.getHeight()-85,70,20);
+                    g2d.setColor(Color.black);
+                    g2d.drawString("COMMEND",0,frame.getHeight()-70);
+                }else {
+                    g2d.setColor(Color.white);
+                    g2d.fillRect(0,frame.getHeight()-85,70,20);
+                    g2d.setColor(Color.black);
+                    g2d.drawString("INPUT",14,frame.getHeight()-70);
+                }
+                //commend input show
+                if (!isInput && isCommendInput){
+                    g2d.setColor(Color.white);
+                    g2d.drawString(CommendInput.toString(),0,frame.getHeight()-50);
+                }
+
             }
         };
    }
@@ -88,7 +114,7 @@ public class Main {
                             if (TextLine>0 && KickNow==0){
                                 KickNow = TempString[TextLine-1].length();
                                 TempString[TextLine-1].append(TempString[TextLine]);
-                                TempString[TextLine] = null;
+                                    TempString[TextLine] = new StringBuffer("");
                                 TextLine--;
                             }
                             break;
@@ -147,12 +173,48 @@ public class Main {
             }else {
                  switch (e.getKeyCode()){
                      case KeyEvent.VK_I:
-                         isInput = true;
+                         if (!isCommendInput) {
+                             isInput = true;
+                         }
+                         break;
+                     case KeyEvent.VK_ESCAPE:
+                         new JVIM().commendExit();
+                         break;
+                     case KeyEvent.VK_ENTER:
+                         //TODO do commend
+                         new commend().runCommend(CommendInput.substring(1,CommendInput.length()));
+                         new JVIM().commendExit();
+                         break;
+                     case KeyEvent.VK_BACK_SPACE:
+                         if (isCommendInput && CommendInput.toString() != ""){
+                             CommendInput.delete(CommendInput.length()-1,CommendInput.length());
+                         }
+                         if (CommendInput.length() == 0){
+                             new JVIM().commendExit();
+                         }
+                         break;
+                 }
+                 //字符判d 我不知道为什么找不到冒号：（
+                 switch (e.getKeyChar()){
+                     case ':':
+                   new JVIM().commendStart();
+                         break;
+                 }
+                 if (isCommendInput && !isSpecialKey(e.getKeyCode())){
+                     CommendInput.append(e.getKeyChar());
                  }
              }
                 isKickShow = true;
             }
         });
+   }
+   private void commendExit(){
+       isCommendInput=false;
+       CommendInput = new StringBuffer("");
+   }
+   private void commendStart(){
+       System.out.println("reset");
+       isCommendInput=true;
    }
     private static boolean isSpecialKey(int keyCode) {
         // 判断是否为控制键、Shift 键、Alt 键、退格键
