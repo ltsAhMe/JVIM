@@ -3,6 +3,18 @@ package JVIM;
 import java.io.*;
 
 public class todo {
+    public void fileReader(String path) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            int theline=0;
+            while ((line = br.readLine()) != null) {
+              new JVIM().TempStringSet(line,theline);
+                theline++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void fileWrite(StringBuffer[] theSTR,String where){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(where));

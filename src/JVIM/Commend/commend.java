@@ -2,9 +2,6 @@ package JVIM.Commend;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-
 import JVIM.todo;
 import JVIM.*;
 
@@ -86,16 +83,17 @@ public class commend {
                     System.out.println("write");
                     //TODO write
                     if (isArgs) {
+                        new JVIM().setNowWhere(args);
                         new todo().fileWrite(JVIM.getTempStr(),args);
-                    }if (isArgs){
-                        new todo().fileWrite(JVIM.getTempStr(),"test");
+                    }if (!isArgs){
+                        new todo().fileWrite(JVIM.getTempStr(),new JVIM().getNowWhere());
                     }
                     break;
                 case 2:
                     System.exit(0);
                     break;
                 case 3:
-                        new todo().fileWrite(JVIM.getTempStr(),"test");
+                        new todo().fileWrite(JVIM.getTempStr(),new JVIM().getNowWhere());
                     System.exit(0);
                     break;
                 case 4:
@@ -104,8 +102,25 @@ public class commend {
                 case 5:
                     todo.executeCommand(args);
                     break;
+                case 6:
+                    //Code highlight
+                    //todo
+                    if (args.equals("")) {
+                        new JVIM().changeCodelight();
+                    }else {
+                        new JVIM().setTheCHLmode(args);
+                    }
+                    break;
+                case 7:
+                    //shadow
+                    new JVIM().changeshadow();
+                    break;
+                case 8:
+                    new todo().fileReader(args);
+                    new JVIM().setNowWhere(args);
                 case 99:
                     System.out.println("error");
             }
+            args="";
     }
 }

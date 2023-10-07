@@ -1,19 +1,23 @@
 package JVIM;
 
-
+import JVIM.code.HighLight;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Collections;
 import JVIM.Commend.commend;
 public class JVIM {
-    static String nowWhereis = System.getProperty("user.home");
+    static String theCHLmode = "java";
+    static String nowWhereis = null;
     static StringBuffer CommendInput = new StringBuffer("");
     static Boolean isCommendInput = false;
+    static Boolean isHighlight=true;
     static StringBuffer[] TempString = new StringBuffer[100];
     static int Hz = 30;
     static JFrame frame;
+    static Boolean isShadow = false;
     static int TextLine =0;
     static int KickNow =0;
     static JPanel panel;
@@ -25,6 +29,7 @@ public class JVIM {
         init("JVIM - swing",new Dimension(500,400));
     }
     public static void init(String title, Dimension Size){
+        new HighLight().setCHLfile(theCHLmode);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
         frame = new JFrame(title);
         panel = getPanel();
@@ -46,11 +51,19 @@ public class JVIM {
         timer.start();
         KickShow.start();
     }
+    Color test = new Color(157, 57, 57);
     public static StringBuffer[] getTempStr(){
         return TempString;
     }
     public String getNowWhere(){
         return nowWhereis;
+    }
+    public void setNowWhere(String path){
+        nowWhereis = path;
+    }
+    public void setTheCHLmode(String str){
+        theCHLmode=str;
+        new HighLight().setCHLfile(theCHLmode);
     }
    private static JPanel getPanel(){
         return new JPanel(){
@@ -61,14 +74,22 @@ public class JVIM {
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 //background
                 g2d.setColor(Color.BLACK);
-                g2d.fillRect(0,0,frame.getWidth(),frame.getHeight());
-                //text
+                g2d.fillRect(0, 0, frame.getWidth(), frame.getHeight());
+                //text shadow
                 g2d.setFont(TextFont);
-                g2d.setColor(Color.white);
-                for (int i=0;i<nowShowHow();i++){
-                    g2d.drawString(TempString[i].toString(),10,20 + (i*fontMetrics.getHeight()));
+                if (isShadow) {
+                    g2d.setColor(new Color(107, 107, 107));
+                    for (int i = 0; i < nowShowHow(); i++) {
+                        g2d.drawString(TempString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()));
+                    }
                 }
-
+                //text
+                if (!isHighlight){
+                g2d.setColor(Color.white);
+                for (int i = 0; i < nowShowHow(); i++) {
+                    g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()));
+                }
+            }
 
                 //kick
                 if (isInput) {
@@ -78,15 +99,12 @@ public class JVIM {
                     }
                 }
                 //mode show
+                g2d.setColor(Color.white);
+                g2d.fillRect(0,frame.getHeight()-85,frame.getWidth(),20);
+                g2d.setColor(Color.black);
                 if (!isInput){
-                    g2d.setColor(Color.white);
-                    g2d.fillRect(0,frame.getHeight()-85,70,20);
-                    g2d.setColor(Color.black);
                     g2d.drawString("COMMEND",0,frame.getHeight()-70);
                 }else {
-                    g2d.setColor(Color.white);
-                    g2d.fillRect(0,frame.getHeight()-85,70,20);
-                    g2d.setColor(Color.black);
                     g2d.drawString("INPUT",14,frame.getHeight()-70);
                 }
                 //commend input show
@@ -94,9 +112,33 @@ public class JVIM {
                     g2d.setColor(Color.white);
                     g2d.drawString(CommendInput.toString(),0,frame.getHeight()-50);
                 }
-
+                //code highlight
+                //todo code light,but i tired
+                if (isHighlight){
+                    for (int i=0;i<nowShowHow();i++){
+                        for (int s = 0;s<TempString[i].length();s++){
+                            try {
+                                if (!TempString[i].substring(s,s+1).equals(" ")) {
+                                    g2d.setColor(new HighLight().colorReader(TempString[i].toString(), s));
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            g2d.drawString(TempString[i].substring(s,s+1),10+fontMetrics.stringWidth(TempString[i].substring(0,s)),20 + (i*fontMetrics.getHeight()));
+                        }
+                    }
+                }
             }
         };
+   }
+   public void changeshadow(){
+        isShadow = !isShadow;
+   }
+    public void changeCodelight(){
+        isHighlight = !isHighlight;
+    }
+   public void TempStringSet(String str,int line){
+        TempString[line] = new StringBuffer(str);
    }
    private static void PanelgetKey(){
         panel.setFocusable(true);
@@ -166,13 +208,11 @@ public class JVIM {
 
                             break;
                     }
-                    System.out.println(KickNow);
 
                 } else {
                     // 不是特殊按键
                     TempString[TextLine].insert(KickNow, e.getKeyChar());
                     KickNow++;
-                    System.out.println(TempString[TextLine].toString());
                 }
             }else {
                  switch (e.getKeyCode()){
@@ -211,6 +251,9 @@ public class JVIM {
                 isKickShow = true;
             }
         });
+   }
+   public String getCHLmode(){
+        return theCHLmode;
    }
    private void commendExit(){
        isCommendInput=false;
