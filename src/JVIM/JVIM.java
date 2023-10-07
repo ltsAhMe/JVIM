@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.Collections;
 import JVIM.Commend.commend;
 public class JVIM {
+    static String nowWhereis = System.getProperty("user.home");
     static StringBuffer CommendInput = new StringBuffer("");
     static Boolean isCommendInput = false;
     static StringBuffer[] TempString = new StringBuffer[100];
@@ -47,6 +48,9 @@ public class JVIM {
     }
     public static StringBuffer[] getTempStr(){
         return TempString;
+    }
+    public String getNowWhere(){
+        return nowWhereis;
     }
    private static JPanel getPanel(){
         return new JPanel(){

@@ -1,8 +1,7 @@
 package JVIM.Commend;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +11,14 @@ import JVIM.*;
 
 public class commend {
     Boolean isArgs = false;
-     String[] args = new String[100];
+     String args = "";
 
     public void runCommend(String commend) {
         Docommend(whatcommend(commend));
     }
 
     private int whatcommend(String commend) {
-        File commends = new File("src/JVIM/Commend/Commends");
+        File commends = readFileFromJar("JVIM/Commend/Commends");
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -30,7 +29,7 @@ public class commend {
             StringBuffer commendBuffer = new StringBuffer(commend);
             while ((line = bufferedReader.readLine()) != null) {
                 theLine++;
-                if (commend.indexOf(' ')!=-1){
+                if (commend.contains(String.valueOf(' '))){
                     for (int i=0;i<=commend.length();i++){
                         if (commendBuffer.substring(0,i).equals(line)){
                                 isArgs = true;
@@ -61,24 +60,23 @@ public class commend {
         }
         return 99;
     }
-    private void setArgs(String Targs){
-        List<Integer> positions = new ArrayList<>();
-        for (int i = 0; i < Targs.length(); i++) {
-            if (Targs.charAt(i) == ' ') {
-                positions.add(i);
+    public File readFileFromJar(String filePath) {
+        InputStream inputStream = getClass().getResourceAsStream("/" + filePath);
+        if (inputStream != null) {
+            File tempFile;
+            try {
+                tempFile = File.createTempFile("temp", ".txt");
+                tempFile.deleteOnExit();
+                Files.copy(inputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                return tempFile;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        // 将字符串按照空格位置分割为子字符串
-        String[] args = new String[positions.size() + 1]; // 数组长度为分割后的子字符串个数加一（因为最后一个子字符串后面没有空格）
-        int prev = 0; // 前一个空格位置
-        for (int i = 0; i < positions.size(); i++) {
-            int pos = positions.get(i); // 当前空格位置
-            args[i] = Targs.substring(prev, pos); // 分割出子字符串
-            prev = pos + 1; // 更新前一个空格位置
-        }
-        args[args.length - 1] = Targs.substring(prev); // 最后一个子字符串
-        this.args = args;
+        return null;
+    }
+    private void setArgs(String Targs){
+        args = Targs.substring(1,Targs.length());
     }
 
 
@@ -87,9 +85,9 @@ public class commend {
                 case 1:
                     System.out.println("write");
                     //TODO write
-                    if (isArgs = true) {
-                        new todo().fileWrite(JVIM.getTempStr(),args[1]);
-                    }else {
+                    if (isArgs) {
+                        new todo().fileWrite(JVIM.getTempStr(),args);
+                    }if (isArgs){
                         new todo().fileWrite(JVIM.getTempStr(),"test");
                     }
                     break;
@@ -99,6 +97,12 @@ public class commend {
                 case 3:
                         new todo().fileWrite(JVIM.getTempStr(),"test");
                     System.exit(0);
+                    break;
+                case 4:
+                    System.out.println("now is "+JVIM.nowShowHow());
+                    break;
+                case 5:
+                    todo.executeCommand(args);
                     break;
                 case 99:
                     System.out.println("error");
