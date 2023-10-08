@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="更好的回车">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/Commends" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/Commends" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/JVIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/JVIM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/todo.java" afterDir="false" />
@@ -203,7 +202,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696772442456</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="更好的回车">
+      <option name="closed" value="true" />
+      <created>1696774072509</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1696774072509</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

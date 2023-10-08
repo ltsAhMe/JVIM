@@ -7,6 +7,7 @@ import JVIM.*;
 
 
 public class commend {
+    File commends = readFileFromJar("JVIM/Commend/Commends");
     Boolean isArgs = false;
      String args = "";
 
@@ -15,7 +16,7 @@ public class commend {
     }
 
     private int whatcommend(String commend) {
-        File commends = readFileFromJar("JVIM/Commend/Commends");
+
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -132,7 +133,7 @@ public class commend {
                         new JVIM().TempStringSet("", new JVIM().getTextLine());
                     }else {
                         if (args.equals("all")){
-                            new JVIM().setTextLine(0);
+                            new JVIM().setTextLine(0,0);
                             new JVIM().TempStringClear();
                         }else {
                             new JVIM().TempStringSet("", Integer.parseInt(args));

@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -37,7 +38,7 @@ public class JVIM {
     }
 
     public static void init(String title, Dimension Size) {
-        System.out.println(nowShowHow());
+        todo.fontFile = new commend().readFileFromJar("JVIM/font.ttf");
         TextFont = todo.fontget(13);
         fontMetrics = getPanel().getFontMetrics(TextFont);
         new HighLight().setCHLfile(theCHLmode);
@@ -294,7 +295,6 @@ public class JVIM {
                     }
                 }
                 panel.repaint();
-                System.out.println(nowShowHow());
             }
         });
     }
@@ -371,8 +371,9 @@ public class JVIM {
     public void changeCodelight() {
         isHighlight = !isHighlight;
     }
-   public void setTextLine(int num){
+   public void setTextLine(int num,int kick){
         TextLine=num;
+        KickNow = kick;
    }
     public void TempStringSet(String str, int line) {
         TempString[line] = new StringBuffer(str);

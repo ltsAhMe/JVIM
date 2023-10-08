@@ -57,12 +57,11 @@ public class todo {
             e.printStackTrace();
         }
     }
+    static File fontFile;
     public static Font fontget(int how){
         try {
             // 加载字体文件
-            File inputStream = new commend().readFileFromJar("JVIM/font.ttf");
-            System.out.println(inputStream.toString());
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
 
             // 设置字体样式和大小
             return customFont.deriveFont(Font.BOLD, how);
