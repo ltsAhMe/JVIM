@@ -1,5 +1,5 @@
 package JVIM;
-
+import JVIM.Commend.commend;
 import JVIM.code.HighLight;
 import javax.swing.*;
 import java.awt.*;
@@ -7,29 +7,32 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Collections;
-import JVIM.Commend.commend;
+
 public class JVIM {
     static Color textColor = Color.white;
     static String theCHLmode = "java";
     static String nowWhereis = null;
-    static StringBuffer CommendInput = new StringBuffer("");
+    static StringBuffer CommendInput = new StringBuffer();
     static Boolean isCommendInput = false;
-    static Boolean isHighlight=false;
-    static StringBuffer[] TempString = new StringBuffer[100];
+    static Boolean isHighlight = false;
+    static StringBuffer[] TempString = new StringBuffer[9999];
     static int Hz = 30;
     static JFrame frame;
     static Boolean isShadow = false;
-    static int TextLine =0;
-    static int KickNow =0;
+    static int startLine = 0;
+    static int TextLine = 0;
+    static int KickNow = 0;
     static JPanel panel;
     static Font TextFont = new Font("Arial", Font.BOLD, 13);
     static Boolean isKickShow = true;
     static Boolean isInput = false;
     static FontMetrics fontMetrics = getPanel().getFontMetrics(TextFont);
+
     public static void main(String[] args) {
-        init("JVIM",new Dimension(500,400));
+        init("JVIM", new Dimension(500, 400));
     }
-    public static void init(String title, Dimension Size){
+
+    public static void init(String title, Dimension Size) {
         new HighLight().setCHLfile(theCHLmode);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
         frame = new JFrame(title);
@@ -41,9 +44,8 @@ public class JVIM {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
         frame.setVisible(true);
-
-        TempString[TextLine] = new StringBuffer("");
-        Timer timer = new Timer(Hz/1000, e -> {
+        TempString[0] = new StringBuffer();
+        Timer timer = new Timer(Hz / 1000, e -> {
             panel.repaint();
         });
         Timer KickShow = new Timer(800, e -> {
@@ -52,22 +54,28 @@ public class JVIM {
         timer.start();
         KickShow.start();
     }
+
     Color test = new Color(157, 57, 57);
-    public static StringBuffer[] getTempStr(){
+
+    public static StringBuffer[] getTempStr() {
         return TempString;
     }
-    public String getNowWhere(){
+
+    public String getNowWhere() {
         return nowWhereis;
     }
-    public void setNowWhere(String path){
+
+    public void setNowWhere(String path) {
         nowWhereis = path;
     }
-    public void setTheCHLmode(String str){
-        theCHLmode=str;
+
+    public void setTheCHLmode(String str) {
+        theCHLmode = str;
         new HighLight().setCHLfile(theCHLmode);
     }
-   private static JPanel getPanel(){
-        return new JPanel(){
+
+    private static JPanel getPanel() {
+        return new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -81,209 +89,232 @@ public class JVIM {
                 if (isShadow) {
                     g2d.setColor(new Color(107, 107, 107));
                     for (int i = 0; i < nowShowHow(); i++) {
-                        g2d.drawString(TempString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()));
+                        if (i != nowShowHow() - startLine) {
+                            g2d.drawString(TempString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                        }
                     }
                 }
                 //text
-                if (!isHighlight){
-                g2d.setColor(textColor);
-                for (int i = 0; i < nowShowHow(); i++) {
-                    g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()));
+                if (!isHighlight) {
+                    g2d.setColor(textColor);
+                    for (int i = 0; i < nowShowHow(); i++) {
+                        if (i != nowShowHow() - startLine) {
+                            g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                        }
+                    }
                 }
-            }
-
+                //code highlight
+                if (isHighlight) {
+                    for (int i = 0; i < nowShowHow(); i++) {
+                        for (int s = 0; s < TempString[i].length(); s++) {
+                            try {
+                                if (!TempString[i].substring(s, s + 1).equals(" ")) {
+                                    g2d.setColor(new HighLight().colorReader(TempString[i].toString(), s));
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (i != nowShowHow() - startLine) {
+                                g2d.drawString(TempString[i].substring(s, s + 1), 10 + fontMetrics.stringWidth(TempString[i].substring(0, s)), 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                            }
+                        }
+                    }
+                }
                 //kick
                 if (isInput) {
                     if (isKickShow) {
                         g2d.setColor(Color.white);
-                        g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7+ (TextLine*fontMetrics.getHeight()), 2, fontMetrics.getHeight());
+                        g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()), 2, fontMetrics.getHeight());
                     }
                 }
                 //mode show
                 g2d.setColor(Color.darkGray);
-                g2d.fillRect(0,0,5,panel.getHeight()-40);
+                g2d.fillRect(0, 0, 5, panel.getHeight() - 40);
                 g2d.setColor(Color.white);
-                g2d.fillRect(0,frame.getHeight()-85,frame.getWidth(),20);
+                g2d.fillRect(0, frame.getHeight() - 85, frame.getWidth(), 20);
 
                 g2d.setColor(Color.black);
-                if (!isInput){
-                    g2d.drawString("COMMEND",0,frame.getHeight()-70);
-                }else {
-                    g2d.drawString("INPUT",14,frame.getHeight()-70);
+                if (!isInput) {
+                    g2d.drawString("COMMEND", 0, frame.getHeight() - 70);
+                } else {
+                    g2d.drawString("INPUT", 14, frame.getHeight() - 70);
                 }
                 //Line show
-                g2d.drawString(String.valueOf(TextLine) +","+String.valueOf(KickNow),frame.getWidth()-50,frame.getHeight()-70);
+                g2d.drawString(TextLine + "," + KickNow, frame.getWidth() - 50, frame.getHeight() - 70);
                 //now where show
                 if (nowWhereis != null) {
                     g2d.drawString(nowWhereis, frame.getWidth() / 2, frame.getHeight() - 70);
                 }
 
                 //commend input show
-                if (!isInput && isCommendInput){
+                if (!isInput && isCommendInput) {
                     g2d.setColor(Color.white);
-                    g2d.drawString(CommendInput.toString(),0,frame.getHeight()-50);
+                    g2d.drawString(CommendInput.toString(), 0, frame.getHeight() - 50);
                 }
-                //code highlight
-                //todo code light,but i tired
-                if (isHighlight){
-                    for (int i=0;i<nowShowHow();i++){
-                        for (int s = 0;s<TempString[i].length();s++){
-                            try {
-                                if (!TempString[i].substring(s,s+1).equals(" ")) {
-                                    g2d.setColor(new HighLight().colorReader(TempString[i].toString(), s));
-                                }
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            g2d.drawString(TempString[i].substring(s,s+1),10+fontMetrics.stringWidth(TempString[i].substring(0,s)),20 + (i*fontMetrics.getHeight()));
-                        }
-                    }
-                }
+
 
             }
         };
-   }
-   public void changeshadow(){
+    }
+
+    public void changeshadow() {
         isShadow = !isShadow;
-   }
-    public void changeCodelight(){
+    }
+
+    public void changeCodelight() {
         isHighlight = !isHighlight;
     }
-   public void TempStringSet(String str,int line){
+
+    public void TempStringSet(String str, int line) {
         TempString[line] = new StringBuffer(str);
-   }
-   private static void PanelgetKey(){
+    }
+
+    private static void PanelgetKey() {
         panel.setFocusable(true);
         panel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 int keyCode = e.getKeyCode();
-             if (isInput){
-                if (isSpecialKey(keyCode)) {
-                    switch (keyCode) {
-                        case KeyEvent.VK_BACK_SPACE:
-                            //退格
-                            if (KickNow > 0) {
-                                TempString[TextLine].delete(KickNow - 1, KickNow);
-                                KickNow--;
-                            }
-                            //返回上一行
-                            if (TextLine>0 && KickNow==0){
-                                KickNow = TempString[TextLine-1].length();
-                                TempString[TextLine-1].append(TempString[TextLine]);
-                                    TempString[TextLine] = new StringBuffer("");
-                                TextLine--;
-                            }
-                            break;
+                if (isInput) {
+                    if (isSpecialKey(keyCode)) {
+                        switch (keyCode) {
+                            case KeyEvent.VK_BACK_SPACE:
+                                //退格
+                                if (KickNow > 0) {
+                                    TempString[TextLine].delete(KickNow - 1, KickNow);
+                                    KickNow--;
+                                }
+                                //返回上一行
+                                if (TextLine > 0 && KickNow == 0) {
+                                    KickNow = TempString[TextLine - 1].length();
+                                    TempString[TextLine - 1].append(TempString[TextLine]);
+                                    TempString[TextLine] = new StringBuffer();
+                                    TextLine--;
+                                }
+                                new JVIM().checkPanelPageUP();
+                                break;
                             //left
-                        case KeyEvent.VK_LEFT:
-                            if (KickNow > 0) {
-                                KickNow--;
-                            }
-                            break;
+                            case KeyEvent.VK_LEFT:
+                                if (KickNow > 0) {
+                                    KickNow--;
+                                }
+                                break;
                             //right
-                        case KeyEvent.VK_RIGHT:
-                            if (KickNow < TempString[TextLine].length()) {
-                                KickNow++;
-                            }
-                            break;
+                            case KeyEvent.VK_RIGHT:
+                                if (KickNow < TempString[TextLine].length()) {
+                                    KickNow++;
+                                }
+                                break;
                             //off input mode
-                        case KeyEvent.VK_ESCAPE:
-                            isInput = false;
-                            break;
+                            case KeyEvent.VK_ESCAPE:
+                                isInput = false;
+                                break;
                             //回车
-                        case KeyEvent.VK_ENTER:
-                            if (TempString[TextLine+1] == null){
-                                TempString[TextLine+1] = new StringBuffer("");
-                            }
-                                TempString[TextLine+1].append(TempString[TextLine].substring(KickNow,TempString[TextLine].length()));
-                            TempString[TextLine].delete(KickNow, TempString[TextLine].length());
-                            KickNow=TempString[TextLine+1].length();
-                            TextLine++;
-                            new JVIM().checkPanelPage();
-                            break;
-                        case KeyEvent.VK_UP:
-                           if (TextLine>0){
-                               if (KickNow > TempString[TextLine-1].length()){
-                                   KickNow=TempString[TextLine-1].length();
-                               }
-                               TextLine--;
-                           }
-                            new JVIM().checkPanelPage();
-                            break;
-                        case KeyEvent.VK_DOWN:
-                                if (TempString[TextLine+1]!=null) {
+                            case KeyEvent.VK_ENTER:
+                                if (TempString[TextLine + 1] == null) {
+                                    TempString[TextLine + 1] = new StringBuffer();
+                                }
+                                TempString[TextLine + 1].append(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
+                                TempString[TextLine].delete(KickNow, TempString[TextLine].length());
+                                KickNow = TempString[TextLine + 1].length();
+                                TextLine++;
+                                new JVIM().checkPanelPageDown();
+                                break;
+                            case KeyEvent.VK_UP:
+                                if (TextLine > 0) {
+                                    if (KickNow > TempString[TextLine - 1].length()) {
+                                        KickNow = TempString[TextLine - 1].length();
+                                    }
+                                    TextLine--;
+                                }
+                                new JVIM().checkPanelPageUP();
+                                break;
+                            case KeyEvent.VK_DOWN:
+                                if (TempString[TextLine + 1] != null) {
                                     if (KickNow > TempString[TextLine + 1].length()) {
                                         KickNow = TempString[TextLine + 1].length();
                                     }
                                     TextLine++;
                                 }
-                        new JVIM().checkPanelPage();
+                                new JVIM().checkPanelPageDown();
 
+                                break;
+                        }
+
+                    } else {
+                        // 不是特殊按键
+                        TempString[TextLine].insert(KickNow, e.getKeyChar());
+                        KickNow++;
+                    }
+                } else {
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_I:
+                            if (!isCommendInput) {
+                                isInput = true;
+                            }
+                            break;
+                        case KeyEvent.VK_ESCAPE:
+                            new JVIM().commendExit();
+                            break;
+                        case KeyEvent.VK_ENTER:
+                            //TODO do commend
+                            new commend().runCommend(CommendInput.substring(1, CommendInput.length()));
+                            new JVIM().commendExit();
+                            break;
+                        case KeyEvent.VK_BACK_SPACE:
+                            if (isCommendInput && CommendInput.toString() != "") {
+                                CommendInput.delete(CommendInput.length() - 1, CommendInput.length());
+                            }
+                            if (CommendInput.length() == 0) {
+                                new JVIM().commendExit();
+                            }
                             break;
                     }
-
-                } else {
-                    // 不是特殊按键
-                    TempString[TextLine].insert(KickNow, e.getKeyChar());
-                    KickNow++;
+                    //字符判duan 我不知道为什么找不到冒号：（
+                    switch (e.getKeyChar()) {
+                        case ':':
+                            new JVIM().commendStart();
+                            break;
+                    }
+                    if (isCommendInput && !isSpecialKey(e.getKeyCode())) {
+                        CommendInput.append(e.getKeyChar());
+                    }
                 }
-            }else {
-                 switch (e.getKeyCode()){
-                     case KeyEvent.VK_I:
-                         if (!isCommendInput) {
-                             isInput = true;
-                         }
-                         break;
-                     case KeyEvent.VK_ESCAPE:
-                         new JVIM().commendExit();
-                         break;
-                     case KeyEvent.VK_ENTER:
-                         //TODO do commend
-                         new commend().runCommend(CommendInput.substring(1,CommendInput.length()));
-                         new JVIM().commendExit();
-                         break;
-                     case KeyEvent.VK_BACK_SPACE:
-                         if (isCommendInput && CommendInput.toString() != ""){
-                             CommendInput.delete(CommendInput.length()-1,CommendInput.length());
-                         }
-                         if (CommendInput.length() == 0){
-                             new JVIM().commendExit();
-                         }
-                         break;
-                 }
-                 //字符判d 我不知道为什么找不到冒号：（
-                 switch (e.getKeyChar()){
-                     case ':':
-                   new JVIM().commendStart();
-                         break;
-                 }
-                 if (isCommendInput && !isSpecialKey(e.getKeyCode())){
-                     CommendInput.append(e.getKeyChar());
-                 }
-             }
                 isKickShow = true;
             }
         });
-   }
-   private void checkPanelPage(){
-    if ((TextLine * fontMetrics.getHeight())+ fontMetrics.getHeight()>= frame.getHeight()-85){
-        System.out.println("down!!");
-
     }
-   }
-   public String getCHLmode(){
+
+    private void checkPanelPageDown() {
+        if (fontMetrics.getHeight() * (TextLine - startLine) >= frame.getHeight()-100) {
+            System.out.println("down!!");
+            startLine++;
+            TempString[nowShowHow() + 1] = new StringBuffer();
+        }
+    }
+//Color test = new Color(59, 250, 0);
+    private void checkPanelPageUP() {
+        if (startLine > 0 && fontMetrics.getHeight() * (TextLine - startLine) <= 10) {
+            System.out.println("UP!!");
+            startLine--;
+        }
+    }
+
+    public String getCHLmode() {
         return theCHLmode;
-   }
-   private void commendExit(){
-       isCommendInput=false;
-       CommendInput = new StringBuffer("");
-   }
-   private void commendStart(){
-       System.out.println("reset");
-       isCommendInput=true;
-   }
+    }
+
+    private void commendExit() {
+        isCommendInput = false;
+        CommendInput = new StringBuffer();
+    }
+
+    private void commendStart() {
+        System.out.println("reset");
+        isCommendInput = true;
+    }
+
     private static boolean isSpecialKey(int keyCode) {
         // 判断是否为控制键、Shift 键、Alt 键、退格键
         if (keyCode == KeyEvent.VK_CONTROL ||
@@ -294,7 +325,7 @@ public class JVIM {
         }
 
         // 判断是否为 ESC、F1 到 F12、DEL、HOME、PgUp 和 PgDn 键
-        if (keyCode == KeyEvent.VK_ESCAPE ||
+        return keyCode == KeyEvent.VK_ESCAPE ||
                 keyCode == KeyEvent.VK_F1 ||
                 keyCode == KeyEvent.VK_F2 ||
                 keyCode == KeyEvent.VK_F3 ||
@@ -316,17 +347,15 @@ public class JVIM {
                 keyCode == KeyEvent.VK_END ||
                 keyCode == KeyEvent.VK_PAGE_UP ||
                 keyCode == KeyEvent.VK_ENTER ||
-                keyCode == KeyEvent.VK_PAGE_DOWN) {
-            return true;
-        }
-        return false;
+                keyCode == KeyEvent.VK_PAGE_DOWN;
     }
-    public static int nowShowHow(){
+
+    public static int nowShowHow() {
         int s = 0;
-        for (int i=0;i<=TempString.length;i++){
-            if (TempString[i] == null){
-               break;
-            }else {
+        for (int i = 0; i <= TempString.length; i++) {
+            if (TempString[i] == null) {
+                break;
+            } else {
                 s++;
             }
         }
