@@ -131,8 +131,13 @@ public class commend {
                     if (args.equals("")) {
                         new JVIM().TempStringSet("", new JVIM().getTextLine());
                     }else {
-                        new JVIM().TempStringSet("",Integer.parseInt(args));
-                    }
+                        if (args.equals("all")){
+                            new JVIM().setTextLine(0);
+                            new JVIM().TempStringClear();
+                        }else {
+                            new JVIM().TempStringSet("", Integer.parseInt(args));
+                        }
+                        }
                     break;
                 case 11:
                     //TODO paste
@@ -142,7 +147,9 @@ public class commend {
                     break;
                 case 13:
                     //TODO find
-
+                case 15:
+                    new JVIM().changeBD();
+                    break;
                 case 99:
                     System.out.println("error");
             }

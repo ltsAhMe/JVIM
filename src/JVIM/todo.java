@@ -57,7 +57,7 @@ public class todo {
             e.printStackTrace();
         }
     }
-    public static Font fontget(){
+    public static Font fontget(int how){
         try {
             // 加载字体文件
             File inputStream = new commend().readFileFromJar("JVIM/font.ttf");
@@ -65,7 +65,7 @@ public class todo {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 
             // 设置字体样式和大小
-            return customFont.deriveFont(Font.BOLD, 13);
+            return customFont.deriveFont(Font.BOLD, how);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }

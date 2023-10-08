@@ -27,7 +27,8 @@ public class JVIM {
     static int KickNow = 0;
     static JPanel panel;
     static Font TextFont;
-    static Boolean isInput = false;
+    static boolean isInput = false;
+    static boolean isBD = false;
     static FontMetrics fontMetrics;
     Color test = new Color(157, 57, 57);
 
@@ -37,7 +38,7 @@ public class JVIM {
 
     public static void init(String title, Dimension Size) {
         System.out.println(nowShowHow());
-        TextFont = todo.fontget();
+        TextFont = todo.fontget(13);
         fontMetrics = getPanel().getFontMetrics(TextFont);
         new HighLight().setCHLfile(theCHLmode);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
@@ -85,8 +86,19 @@ public class JVIM {
                         }
                     }
                 }
+                //text BD
+                if (isBD){
+                    g2d.setColor(new Color(255, 84, 84));
+                    g2d.setFont(todo.fontget(14));
+                    for (int i = 0; i < nowShowHow(); i++) {
+                        if (i != nowShowHow() - startLine) {
+                            g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                        }
+                    }
+                }
                 //text
                 if (!isHighlight) {
+                    g2d.setFont(TextFont);
                     g2d.setColor(textColor);
                     for (int i = 0; i < nowShowHow(); i++) {
                         if (i != nowShowHow() - startLine) {
@@ -147,7 +159,9 @@ public class JVIM {
             }
         };
     }
-
+    public void changeBD(){
+        isBD = !isBD;
+    }
     private static void PanelgetKey() {
         panel.setFocusable(true);
         panel.addKeyListener(new KeyAdapter() {
@@ -212,8 +226,8 @@ public class JVIM {
                                     TempString = temp;
                                 }else {
                                     TempString[TextLine+1].append(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
-                                    TempString[TextLine].delete(KickNow, TempString[TextLine].length());
                                 }
+                                TempString[TextLine].delete(KickNow, TempString[TextLine].length());
                                 KickNow = TempString[TextLine + 1].length();
 
                                 TextLine++;
@@ -357,9 +371,15 @@ public class JVIM {
     public void changeCodelight() {
         isHighlight = !isHighlight;
     }
-
+   public void setTextLine(int num){
+        TextLine=num;
+   }
     public void TempStringSet(String str, int line) {
         TempString[line] = new StringBuffer(str);
+    }
+    public void TempStringClear(){
+        TempString = new StringBuffer[9999];
+        TempString[0] = new StringBuffer("");
     }
 
     private void checkPanelPageDown() {
