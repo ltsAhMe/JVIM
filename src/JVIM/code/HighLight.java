@@ -16,55 +16,67 @@ public class HighLight {
 
     public Color colorReader(String tempString, int where) throws IOException {
         char chars = tempString.charAt(where);
-        if (chars == ';' || chars == '{' || chars == '}' || chars == '(' || chars == ')'|| chars == '"'|| chars == ':'|| chars == ','|| chars == '['|| chars == ']') {
-            switch (chars) {
-                case ';':
-                    return new Color(64, 199, 110);
-                case '{':
-                    return new Color(128, 49, 237);
-                case '}':
-                    return new Color(128, 49, 237);
-                case '(':
-                    return new Color(255, 187, 0);
-                case ')':
-                    return new Color(255, 187, 0);
-                case '"':
-                    return new Color(246, 57, 213);
-                case ':':
-                    return new Color(154, 255, 0);
-                case ',':
-                    return new Color(0, 116, 23);
-                case '[':
-                    return new Color(0, 255, 51);
-                case ']':
-                    return new Color(0, 255, 51);
-            }
-        } else {
-            String[] words = tempString.split(" ");
-            int theTrue = 0;
-            String TempStr = "";
-            for (int i = 0; i < tempString.length(); i++) {
-                if (words[i] != null) {
-                    if (i < 1) {
-                        TempStr += words[i];
-                    } else {
-                        TempStr += words[i] + " ";
+        if (!checkSM(tempString)){
+            if (chars == ';' || chars == '{' || chars == '}' || chars == '(' || chars == ')' || chars == '"' || chars == ':' || chars == ',' || chars == '[' || chars == ']') {
+                switch (chars) {
+                    case ';':
+                        return new Color(64, 199, 110);
+                    case '{':
+                        return new Color(128, 49, 237);
+                    case '}':
+                        return new Color(128, 49, 237);
+                    case '(':
+                        return new Color(255, 187, 0);
+                    case ')':
+                        return new Color(255, 187, 0);
+                    case '"':
+                        return new Color(246, 57, 213);
+                    case ':':
+                        return new Color(154, 255, 0);
+                    case ',':
+                        return new Color(0, 116, 23);
+                    case '[':
+                        return new Color(0, 255, 51);
+                    case ']':
+                        return new Color(0, 255, 51);
+                }
+            } else {
+                String[] words = tempString.split(" ");
+                int theTrue = 0;
+                String TempStr = "";
+                for (int i = 0; i < tempString.length(); i++) {
+                    if (words[i] != null) {
+                        if (i < 1) {
+                            TempStr += words[i];
+                        } else {
+                            TempStr += words[i] + " ";
+                        }
+                    }
+
+
+                    if (where < TempStr.length()) {
+                        theTrue = i;
+                        break;
                     }
                 }
-
-
-                if (where < TempStr.length()) {
-                    theTrue = i;
-                    break;
+                if (keywordMap.get(words[theTrue]) != null) {
+                    return colorrecode(keywordMap.get(words[theTrue]));
+                } else {
+                    return Color.white;
                 }
             }
-            if (keywordMap.get(words[theTrue]) != null) {
-                return colorrecode(keywordMap.get(words[theTrue]));
-            } else {
-                return Color.white;
-            }
+        }else {
+            return Color.darkGray;
         }
         return Color.white;
+    }
+    private boolean checkSM(String str){
+        for (int i=0;i<str.length()-2;i++){
+            if (str.substring(i,i+2).equals("//")){
+                return true;
+            }
+        }
+        return false;
     }
     public Color colorrecode(String str) {
         String[] rgb = str.split(",");

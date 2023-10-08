@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -14,11 +16,11 @@ public class JVIM {
     static String theCHLmode = "java";
     static String nowWhereis = null;
     static StringBuffer CommendInput = new StringBuffer();
-    static Boolean isCommendInput = false;
-    static Boolean isHighlight = false;
+    static boolean isCommendInput = false;
+    static boolean isHighlight = false;
     static StringBuffer[] TempString = new StringBuffer[9999];
     static JFrame frame;
-    static Boolean isShadow = false;
+    static boolean isShadow = false;
     static int startLine = 0;
     static int TextLine = 0;
     static int KickNow = 0;
@@ -42,7 +44,15 @@ public class JVIM {
         frame.setSize(Size);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //LMAO
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JOptionPane.showMessageDialog(frame, ":q quit");
+            }
+        });
+        //LMAO
         frame.add(panel);
         frame.setVisible(true);
         TempString[0] = new StringBuffer();
@@ -119,6 +129,8 @@ public class JVIM {
                         g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()), 2, fontMetrics.getHeight());
                 }
                 //mode show
+                g2d.setColor(Color.black);
+                g2d.fillRect(0, frame.getHeight() - 85, frame.getWidth(), 100);
                 g2d.setColor(Color.darkGray);
                 g2d.fillRect(0, 0, 5, panel.getHeight() - 40);
                 g2d.setColor(Color.white);
@@ -131,7 +143,7 @@ public class JVIM {
                     g2d.drawString("INPUT", 14, frame.getHeight() - 70);
                 }
                 //Line show
-                g2d.drawString(TextLine + "," + KickNow, frame.getWidth() - 50, frame.getHeight() - 70);
+                g2d.drawString(TextLine + "," + KickNow, frame.getWidth() - 80, frame.getHeight() - 70);
                 //now where show
                 if (nowWhereis != null) {
                     g2d.drawString(nowWhereis, frame.getWidth() / 2, frame.getHeight() - 70);
