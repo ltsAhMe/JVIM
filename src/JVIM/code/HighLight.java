@@ -16,7 +16,9 @@ public class HighLight {
 
     public Color colorReader(String tempString, int where) throws IOException {
         char chars = tempString.charAt(where);
-        if (!checkSM(tempString)){
+        if (checkSM(tempString) && where >= checkSMwhere(tempString)){
+            return Color.darkGray;
+        }else {
             if (chars == ';' || chars == '{' || chars == '}' || chars == '(' || chars == ')' || chars == '"' || chars == ':' || chars == ',' || chars == '[' || chars == ']') {
                 switch (chars) {
                     case ';':
@@ -52,8 +54,6 @@ public class HighLight {
                             TempStr += words[i] + " ";
                         }
                     }
-
-
                     if (where < TempStr.length()) {
                         theTrue = i;
                         break;
@@ -65,8 +65,6 @@ public class HighLight {
                     return Color.white;
                 }
             }
-        }else {
-            return Color.darkGray;
         }
         return Color.white;
     }
@@ -77,6 +75,14 @@ public class HighLight {
             }
         }
         return false;
+    }
+    private int checkSMwhere(String str){
+        for (int i=0;i<str.length()-2;i++){
+            if (str.substring(i,i+2).equals("//")){
+                return i;
+            }
+        }
+        return -1;
     }
     public Color colorrecode(String str) {
         String[] rgb = str.split(",");

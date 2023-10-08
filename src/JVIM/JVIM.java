@@ -1,13 +1,14 @@
 package JVIM;
+
 import JVIM.Commend.commend;
 import JVIM.code.HighLight;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -28,12 +29,14 @@ public class JVIM {
     static Font TextFont;
     static Boolean isInput = false;
     static FontMetrics fontMetrics;
+    Color test = new Color(157, 57, 57);
 
     public static void main(String[] args) {
         init("JVIM", new Dimension(500, 400));
     }
 
     public static void init(String title, Dimension Size) {
+        System.out.println(nowShowHow());
         TextFont = todo.fontget();
         fontMetrics = getPanel().getFontMetrics(TextFont);
         new HighLight().setCHLfile(theCHLmode);
@@ -58,23 +61,8 @@ public class JVIM {
         TempString[0] = new StringBuffer();
     }
 
-    Color test = new Color(157, 57, 57);
-
     public static StringBuffer[] getTempStr() {
         return TempString;
-    }
-
-    public String getNowWhere() {
-        return nowWhereis;
-    }
-
-    public void setNowWhere(String path) {
-        nowWhereis = path;
-    }
-
-    public void setTheCHLmode(String str) {
-        theCHLmode = str;
-        new HighLight().setCHLfile(theCHLmode);
     }
 
     private static JPanel getPanel() {
@@ -125,8 +113,8 @@ public class JVIM {
                 }
                 //kick
                 if (isInput) {
-                        g2d.setColor(Color.white);
-                        g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()), 2, fontMetrics.getHeight());
+                    g2d.setColor(Color.white);
+                    g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()), 2, fontMetrics.getHeight());
                 }
                 //mode show
                 g2d.setColor(Color.black);
@@ -158,20 +146,6 @@ public class JVIM {
 
             }
         };
-    }
-public int getTextLine(){
-        return TextLine;
-}
-    public void changeshadow() {
-        isShadow = !isShadow;
-    }
-
-    public void changeCodelight() {
-        isHighlight = !isHighlight;
-    }
-
-    public void TempStringSet(String str, int line) {
-        TempString[line] = new StringBuffer(str);
     }
 
     private static void PanelgetKey() {
@@ -220,9 +194,28 @@ public int getTextLine(){
                                 if (TempString[TextLine + 1] == null) {
                                     TempString[TextLine + 1] = new StringBuffer();
                                 }
-                                TempString[TextLine + 1].append(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
-                                TempString[TextLine].delete(KickNow, TempString[TextLine].length());
+                                if (TempString[TextLine+1]!=null&& !TempString[TextLine+1].toString().equals("")) {
+                                    StringBuffer[] temp = new StringBuffer[TempString.length];
+                                    for (int i = 0; i < TempString.length; i++) {
+                                        if (TempString[i] != null) {
+                                            temp[i] = new StringBuffer(TempString[i].toString());
+                                        }
+                                    }
+
+                                    for (int i = 0; i <= nowShowHow(); i++) {
+                                        if (i==0){
+                                            temp[TextLine + 1] = new StringBuffer(TempString[TextLine].substring(KickNow,TempString[TextLine].length()));
+                                        }else {
+                                            temp[TextLine + 1 + i] = TempString[TextLine + i];
+                                        }
+                                    }
+                                    TempString = temp;
+                                }else {
+                                    TempString[TextLine+1].append(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
+                                    TempString[TextLine].delete(KickNow, TempString[TextLine].length());
+                                }
                                 KickNow = TempString[TextLine + 1].length();
+
                                 TextLine++;
                                 new JVIM().checkPanelPageDown();
                                 break;
@@ -287,37 +280,9 @@ public int getTextLine(){
                     }
                 }
                 panel.repaint();
+                System.out.println(nowShowHow());
             }
         });
-    }
-
-    private void checkPanelPageDown() {
-        if (fontMetrics.getHeight() * (TextLine - startLine) >= frame.getHeight()-100) {
-            System.out.println("down!!");
-            startLine++;
-            TempString[nowShowHow() + 1] = new StringBuffer();
-        }
-    }
-//Color test = new Color(59, 250, 0);
-    private void checkPanelPageUP() {
-        if (startLine > 0 && fontMetrics.getHeight() * (TextLine - startLine) <= 10) {
-            System.out.println("UP!!");
-            startLine--;
-        }
-    }
-
-    public String getCHLmode() {
-        return theCHLmode;
-    }
-
-    private void commendExit() {
-        isCommendInput = false;
-        CommendInput = new StringBuffer();
-    }
-
-    private void commendStart() {
-        System.out.println("reset");
-        isCommendInput = true;
     }
 
     private static boolean isSpecialKey(int keyCode) {
@@ -329,8 +294,9 @@ public int getTextLine(){
             return true;
         }
 
-        // 判断是否为 ESC、F1 到 F12、DEL、HOME、PgUp 和 PgDn 键
+        // 判断是否为 ESC、F1 到 F12、DEL、HOME、PgUp 和 PgDn 键 window
         return keyCode == KeyEvent.VK_ESCAPE ||
+                keyCode == KeyEvent.VK_WINDOWS ||
                 keyCode == KeyEvent.VK_F1 ||
                 keyCode == KeyEvent.VK_F2 ||
                 keyCode == KeyEvent.VK_F3 ||
@@ -358,12 +324,71 @@ public int getTextLine(){
     public static int nowShowHow() {
         int s = 0;
         for (int i = 0; i <= TempString.length; i++) {
-            if (TempString[i] == null) {
-                break;
-            } else {
+            if (TempString[i] != null) {
                 s++;
+            } else {
+                break;
             }
         }
         return s;
+    }
+
+    public String getNowWhere() {
+        return nowWhereis;
+    }
+
+    public void setNowWhere(String path) {
+        nowWhereis = path;
+    }
+
+    public void setTheCHLmode(String str) {
+        theCHLmode = str;
+        new HighLight().setCHLfile(theCHLmode);
+    }
+
+    public int getTextLine() {
+        return TextLine;
+    }
+
+    public void changeshadow() {
+        isShadow = !isShadow;
+    }
+
+    public void changeCodelight() {
+        isHighlight = !isHighlight;
+    }
+
+    public void TempStringSet(String str, int line) {
+        TempString[line] = new StringBuffer(str);
+    }
+
+    private void checkPanelPageDown() {
+        if (fontMetrics.getHeight() * (TextLine - startLine) >= frame.getHeight() - 100) {
+            System.out.println("down!!");
+            startLine++;
+            TempString[nowShowHow() + 1] = new StringBuffer();
+        }
+    }
+
+    //Color test = new Color(59, 250, 0);
+    private void checkPanelPageUP() {
+        if (startLine > 0 && fontMetrics.getHeight() * (TextLine - startLine) <= 10) {
+            System.out.println("UP!!");
+            startLine--;
+        }
+    }
+
+    public String getCHLmode() {
+        return theCHLmode;
+    }
+
+    private void commendExit() {
+        isCommendInput = false;
+        CommendInput = new StringBuffer();
+    }
+
+    private void commendStart() {
+        System.out.println("reset");
+        isCommendInput = true;
     }
 }
