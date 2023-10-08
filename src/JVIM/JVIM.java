@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.util.Collections;
 import JVIM.Commend.commend;
 public class JVIM {
+    static Color textColor = Color.white;
     static String theCHLmode = "java";
     static String nowWhereis = null;
     static StringBuffer CommendInput = new StringBuffer("");
     static Boolean isCommendInput = false;
-    static Boolean isHighlight=true;
+    static Boolean isHighlight=false;
     static StringBuffer[] TempString = new StringBuffer[100];
     static int Hz = 30;
     static JFrame frame;
@@ -26,7 +27,7 @@ public class JVIM {
     static Boolean isInput = false;
     static FontMetrics fontMetrics = getPanel().getFontMetrics(TextFont);
     public static void main(String[] args) {
-        init("JVIM - swing",new Dimension(500,400));
+        init("JVIM",new Dimension(500,400));
     }
     public static void init(String title, Dimension Size){
         new HighLight().setCHLfile(theCHLmode);
@@ -85,7 +86,7 @@ public class JVIM {
                 }
                 //text
                 if (!isHighlight){
-                g2d.setColor(Color.white);
+                g2d.setColor(textColor);
                 for (int i = 0; i < nowShowHow(); i++) {
                     g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()));
                 }
@@ -95,18 +96,28 @@ public class JVIM {
                 if (isInput) {
                     if (isKickShow) {
                         g2d.setColor(Color.white);
-                        g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 5+ (TextLine*fontMetrics.getHeight()), 2, 18);
+                        g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7+ (TextLine*fontMetrics.getHeight()), 2, fontMetrics.getHeight());
                     }
                 }
                 //mode show
+                g2d.setColor(Color.darkGray);
+                g2d.fillRect(0,0,5,panel.getHeight()-40);
                 g2d.setColor(Color.white);
                 g2d.fillRect(0,frame.getHeight()-85,frame.getWidth(),20);
+
                 g2d.setColor(Color.black);
                 if (!isInput){
                     g2d.drawString("COMMEND",0,frame.getHeight()-70);
                 }else {
                     g2d.drawString("INPUT",14,frame.getHeight()-70);
                 }
+                //Line show
+                g2d.drawString(String.valueOf(TextLine) +","+String.valueOf(KickNow),frame.getWidth()-50,frame.getHeight()-70);
+                //now where show
+                if (nowWhereis != null) {
+                    g2d.drawString(nowWhereis, frame.getWidth() / 2, frame.getHeight() - 70);
+                }
+
                 //commend input show
                 if (!isInput && isCommendInput){
                     g2d.setColor(Color.white);
@@ -128,6 +139,7 @@ public class JVIM {
                         }
                     }
                 }
+
             }
         };
    }
@@ -189,6 +201,7 @@ public class JVIM {
                             TempString[TextLine].delete(KickNow, TempString[TextLine].length());
                             KickNow=TempString[TextLine+1].length();
                             TextLine++;
+                            new JVIM().checkPanelPage();
                             break;
                         case KeyEvent.VK_UP:
                            if (TextLine>0){
@@ -197,6 +210,7 @@ public class JVIM {
                                }
                                TextLine--;
                            }
+                            new JVIM().checkPanelPage();
                             break;
                         case KeyEvent.VK_DOWN:
                                 if (TempString[TextLine+1]!=null) {
@@ -205,6 +219,7 @@ public class JVIM {
                                     }
                                     TextLine++;
                                 }
+                        new JVIM().checkPanelPage();
 
                             break;
                     }
@@ -251,6 +266,12 @@ public class JVIM {
                 isKickShow = true;
             }
         });
+   }
+   private void checkPanelPage(){
+    if ((TextLine * fontMetrics.getHeight())+ fontMetrics.getHeight()>= frame.getHeight()-85){
+        System.out.println("down!!");
+
+    }
    }
    public String getCHLmode(){
         return theCHLmode;

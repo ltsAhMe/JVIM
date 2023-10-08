@@ -16,7 +16,7 @@ public class HighLight {
 
     public Color colorReader(String tempString, int where) throws IOException {
         char chars = tempString.charAt(where);
-        if (chars == ';' || chars == '{' || chars == '}' || chars == '(' || chars == ')'|| chars == '"'|| chars == ':'|| chars == ',') {
+        if (chars == ';' || chars == '{' || chars == '}' || chars == '(' || chars == ')'|| chars == '"'|| chars == ':'|| chars == ','|| chars == '['|| chars == ']') {
             switch (chars) {
                 case ';':
                     return new Color(64, 199, 110);
@@ -34,6 +34,10 @@ public class HighLight {
                     return new Color(154, 255, 0);
                 case ',':
                     return new Color(0, 116, 23);
+                case '[':
+                    return new Color(0, 255, 51);
+                case ']':
+                    return new Color(0, 255, 51);
             }
         } else {
             String[] words = tempString.split(" ");

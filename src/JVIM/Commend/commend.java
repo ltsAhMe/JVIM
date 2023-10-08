@@ -116,8 +116,17 @@ public class commend {
                     new JVIM().changeshadow();
                     break;
                 case 8:
-                    new todo().fileReader(args);
-                    new JVIM().setNowWhere(args);
+                    if (args.equals("")) {
+                        new todo().fileReader(new JVIM().getNowWhere());
+                    }else {
+                        new todo().fileReader(args);
+                        new JVIM().setNowWhere(args);
+                    }
+                    break;
+                case 9:
+                    //TODO config save
+                    break;
+
                 case 99:
                     System.out.println("error");
             }

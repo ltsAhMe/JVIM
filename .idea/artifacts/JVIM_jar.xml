@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="JVIM:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/JVIM_jar</output-path>
+    <output-path>$USER_HOME$/Desktop</output-path>
     <root id="archive" name="JVIM.jar">
       <element id="module-output" name="JVIM" />
     </root>

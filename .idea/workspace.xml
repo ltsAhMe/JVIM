@@ -9,15 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="功能基本完成">
-      <change afterPath="$PROJECT_DIR$/src/JVIM/code/C_CHL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JVIM/code/java_CHL" afterDir="false" />
+    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="代码高亮完成！！还有些小玩意">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/JVIM_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/JVIM_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/Commends" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/Commends" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/JVIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/JVIM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/todo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696654149858</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="代码高亮完成！！还有些小玩意">
+      <option name="closed" value="true" />
+      <created>1696686657821</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1696686657821</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,7 +163,8 @@
     <MESSAGE value="init" />
     <MESSAGE value="commend done" />
     <MESSAGE value="功能基本完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="功能基本完成" />
+    <MESSAGE value="代码高亮完成！！还有些小玩意" />
+    <option name="LAST_COMMIT_MESSAGE" value="代码高亮完成！！还有些小玩意" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
