@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -16,23 +17,23 @@ public class JVIM {
     static Boolean isCommendInput = false;
     static Boolean isHighlight = false;
     static StringBuffer[] TempString = new StringBuffer[9999];
-    static int Hz = 30;
     static JFrame frame;
     static Boolean isShadow = false;
     static int startLine = 0;
     static int TextLine = 0;
     static int KickNow = 0;
     static JPanel panel;
-    static Font TextFont = new Font("Arial", Font.BOLD, 13);
-    static Boolean isKickShow = true;
+    static Font TextFont;
     static Boolean isInput = false;
-    static FontMetrics fontMetrics = getPanel().getFontMetrics(TextFont);
+    static FontMetrics fontMetrics;
 
     public static void main(String[] args) {
         init("JVIM", new Dimension(500, 400));
     }
 
     public static void init(String title, Dimension Size) {
+        TextFont = todo.fontget();
+        fontMetrics = getPanel().getFontMetrics(TextFont);
         new HighLight().setCHLfile(theCHLmode);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().setDefaultFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
         frame = new JFrame(title);
@@ -45,14 +46,6 @@ public class JVIM {
         frame.add(panel);
         frame.setVisible(true);
         TempString[0] = new StringBuffer();
-        Timer timer = new Timer(Hz / 1000, e -> {
-            panel.repaint();
-        });
-        Timer KickShow = new Timer(800, e -> {
-            isKickShow = !isKickShow;
-        });
-        timer.start();
-        KickShow.start();
     }
 
     Color test = new Color(157, 57, 57);
@@ -122,10 +115,8 @@ public class JVIM {
                 }
                 //kick
                 if (isInput) {
-                    if (isKickShow) {
                         g2d.setColor(Color.white);
                         g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()), 2, fontMetrics.getHeight());
-                    }
                 }
                 //mode show
                 g2d.setColor(Color.darkGray);
@@ -156,7 +147,9 @@ public class JVIM {
             }
         };
     }
-
+public int getTextLine(){
+        return TextLine;
+}
     public void changeshadow() {
         isShadow = !isShadow;
     }
@@ -281,7 +274,7 @@ public class JVIM {
                         CommendInput.append(e.getKeyChar());
                     }
                 }
-                isKickShow = true;
+                panel.repaint();
             }
         });
     }

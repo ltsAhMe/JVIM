@@ -126,6 +126,22 @@ public class commend {
                 case 9:
                     //TODO config save
                     break;
+                case 10:
+                    //del
+                    if (args.equals("")) {
+                        new JVIM().TempStringSet("", new JVIM().getTextLine());
+                    }else {
+                        new JVIM().TempStringSet("",Integer.parseInt(args));
+                    }
+                    break;
+                case 11:
+                    //TODO paste
+                    break;
+                case 12:
+                    //TODO set
+                    break;
+                case 13:
+                    //TODO find
 
                 case 99:
                     System.out.println("error");

@@ -1,5 +1,6 @@
 package JVIM;
-
+import JVIM.Commend.commend;
+import java.awt.*;
 import java.io.*;
 
 public class todo {
@@ -55,5 +56,19 @@ public class todo {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public static Font fontget(){
+        try {
+            // 加载字体文件
+            File inputStream = new commend().readFileFromJar("JVIM/font.ttf");
+            System.out.println(inputStream.toString());
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+
+            // 设置字体样式和大小
+            return customFont.deriveFont(Font.BOLD, 13);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -9,10 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="代码高亮完成！！还有些小玩意">
+    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="翻页完成">
+      <change afterPath="$PROJECT_DIR$/src/JVIM/font.ttf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/Commends" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/Commends" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/JVIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/JVIM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/code/java_CHL" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/java_CHL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/todo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +62,7 @@
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ltsAhMe\Documents\src\JVIM\src\JVIM" />
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM\src\JVIM\Commend" />
     </key>
   </component>
@@ -152,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696735158634</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="翻页完成">
+      <option name="closed" value="true" />
+      <created>1696742649477</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1696742649477</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,22 +185,10 @@
     <MESSAGE value="commend done" />
     <MESSAGE value="功能基本完成" />
     <MESSAGE value="代码高亮完成！！还有些小玩意" />
-    <option name="LAST_COMMIT_MESSAGE" value="代码高亮完成！！还有些小玩意" />
+    <MESSAGE value="翻页完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="翻页完成" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/JVIM/JVIM.java</url>
-          <line>288</line>
-          <properties class="JVIM.JVIM" method="checkPanelPageDown">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="frame" language="JAVA" />
