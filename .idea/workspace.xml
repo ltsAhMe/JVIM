@@ -9,8 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="更好的回车">
+    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="修了bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/Commends" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/Commends" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/JVIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/JVIM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/todo.java" afterDir="false" />
@@ -42,19 +44,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ltsAhMe/Desktop&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/ltsAhMe/Documents/src/JVIM",
+    "project.structure.last.edited": "工件",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM" />
@@ -210,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696774072509</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="修了bug">
+      <option name="closed" value="true" />
+      <created>1696776422133</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1696776422133</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -235,7 +245,8 @@
     <MESSAGE value="readme" />
     <MESSAGE value="注释高亮添加" />
     <MESSAGE value="更好的回车" />
-    <option name="LAST_COMMIT_MESSAGE" value="更好的回车" />
+    <MESSAGE value="修了bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修了bug" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

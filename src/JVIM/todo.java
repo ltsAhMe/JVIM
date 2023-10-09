@@ -1,7 +1,11 @@
 package JVIM;
 import JVIM.Commend.commend;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.io.*;
+import java.util.Random;
 
 public class todo {
     public void fileReader(String path) {
@@ -67,6 +71,26 @@ public class todo {
             return customFont.deriveFont(Font.BOLD, how);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+    public static Color getRandomColor(){
+        int min = 0;
+        int max = 5;
+        int s = (int) min + (int) (Math.random() * (max - min));
+       Color[] colors = {new Color(251, 56, 56),new Color(107, 255, 10),new Color(241, 214, 63),new Color(255, 0, 222),new Color(20, 255, 220),new Color(7, 253, 248)};
+       return colors[s];
+    }
+    public static String getPaste(){
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+        boolean hasText = (contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasText) {
+            try {
+                return (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return null;
     }

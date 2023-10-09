@@ -109,6 +109,9 @@ public class commend {
                     if (args.equals("")) {
                         new JVIM().changeCodelight();
                     }else {
+                        if (args.equals("rainbow")){
+                            new JVIM().getRainbow();
+                        }
                         new JVIM().setTheCHLmode(args);
                     }
                     break;
@@ -142,6 +145,7 @@ public class commend {
                     break;
                 case 11:
                     //TODO paste
+                    JVIM.getTempStr()[new JVIM().getTextLine()].append(todo.getPaste());
                     break;
                 case 12:
                     //TODO set
@@ -151,6 +155,14 @@ public class commend {
                 case 15:
                     new JVIM().changeBD();
                     break;
+                case 16:
+
+                case 17:
+                    if (args !=null){
+                      String number[] =args.split(",");
+                      new JVIM().setTextLine(Integer.parseInt(number[0]),Integer.parseInt(number[1]));
+                      new JVIM().setStartLine(Integer.parseInt(number[0]));
+                    }
                 case 99:
                     System.out.println("error");
             }

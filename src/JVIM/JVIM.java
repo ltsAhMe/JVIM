@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JVIM {
+    static boolean isRainbow = false;
     static Color textColor = Color.white;
     static String theCHLmode = "java";
     static String nowWhereis = null;
@@ -82,9 +83,7 @@ public class JVIM {
                 if (isShadow) {
                     g2d.setColor(new Color(107, 107, 107));
                     for (int i = 0; i < nowShowHow(); i++) {
-                        if (i != nowShowHow() - startLine) {
                             g2d.drawString(TempString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
-                        }
                     }
                 }
                 //text BD
@@ -92,9 +91,7 @@ public class JVIM {
                     g2d.setColor(new Color(255, 84, 84));
                     g2d.setFont(todo.fontget(14));
                     for (int i = 0; i < nowShowHow(); i++) {
-                        if (i != nowShowHow() - startLine) {
                             g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
-                        }
                     }
                 }
                 //text
@@ -102,9 +99,7 @@ public class JVIM {
                     g2d.setFont(TextFont);
                     g2d.setColor(textColor);
                     for (int i = 0; i < nowShowHow(); i++) {
-                        if (i != nowShowHow() - startLine) {
                             g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
-                        }
                     }
                 }
                 //code highlight
@@ -112,15 +107,17 @@ public class JVIM {
                     for (int i = 0; i < nowShowHow(); i++) {
                         for (int s = 0; s < TempString[i].length(); s++) {
                             try {
-                                if (!TempString[i].substring(s, s + 1).equals(" ")) {
-                                    g2d.setColor(new HighLight().colorReader(TempString[i].toString(), s));
+                                if (!isRainbow) {
+                                    if (!TempString[i].substring(s, s + 1).equals(" ")) {
+                                        g2d.setColor(new HighLight().colorReader(TempString[i].toString(), s));
+                                    }
+                                }else{
+                                   g2d.setColor(todo.getRandomColor());
                                 }
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            if (i != nowShowHow() - startLine) {
                                 g2d.drawString(TempString[i].substring(s, s + 1), 10 + fontMetrics.stringWidth(TempString[i].substring(0, s)), 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
-                            }
                         }
                     }
                 }
@@ -159,6 +156,12 @@ public class JVIM {
 
             }
         };
+    }
+    public void getRainbow(){
+        isRainbow = !isRainbow;
+    }
+    public void setStartLine(int num){
+        startLine = num;
     }
     public void changeBD(){
         isBD = !isBD;
