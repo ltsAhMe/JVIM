@@ -9,12 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="修了bug">
+    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="修了渲染bug 添加paste rainbow jump命令">
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/CodeLSP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/C_LSP" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/java_LSP" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/Commends" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/Commends" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/JVIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/JVIM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/code/C_CHL" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/C_CHL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/code/java_CHL" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/java_CHL" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/todo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +55,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/ltsAhMe/Documents/src/JVIM",
+    "last_opened_file_path": "C:/Users/ltsAhMe/Documents/src/JVIM/src/JVIM/code/LSP",
     "project.structure.last.edited": "工件",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -62,6 +67,8 @@
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ltsAhMe\Documents\src\JVIM\src\JVIM\code\LSP" />
+      <recent name="C:\Users\ltsAhMe\Documents\src\JVIM\src\JVIM\code\CHL" />
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM\src\JVIM" />
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM\src\JVIM\Commend" />
     </key>
@@ -220,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696776422133</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="修了渲染bug 添加paste rainbow jump命令">
+      <option name="closed" value="true" />
+      <created>1696813295540</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1696813295540</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -246,9 +261,19 @@
     <MESSAGE value="注释高亮添加" />
     <MESSAGE value="更好的回车" />
     <MESSAGE value="修了bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修了bug" />
+    <MESSAGE value="修了渲染bug 添加paste rainbow jump命令" />
+    <option name="LAST_COMMIT_MESSAGE" value="修了渲染bug 添加paste rainbow jump命令" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/JVIM/code/CodeLSP.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="frame" language="JAVA" />

@@ -2,8 +2,12 @@ package JVIM.Commend;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+
+import JVIM.code.CodeLSP;
 import JVIM.todo;
 import JVIM.*;
+
+import javax.swing.*;
 
 
 public class commend {
@@ -129,6 +133,7 @@ public class commend {
                     break;
                 case 9:
                     //TODO config save
+
                     break;
                 case 10:
                     //del
@@ -144,24 +149,45 @@ public class commend {
                         }
                     break;
                 case 11:
-                    //TODO paste
-                    JVIM.getTempStr()[new JVIM().getTextLine()].append(todo.getPaste());
+                    JVIM.getTempStr()[new JVIM().getTextLine()].insert(new JVIM().getKickNow(),todo.getPaste());
                     break;
                 case 12:
                     //TODO set
+
                     break;
                 case 13:
-                    //TODO find
+                    for (int i=0;i<JVIM.nowShowHow();i++){
+                        if (JVIM.getTempStr()[i].indexOf(args) != -1){
+                            new JVIM().setTextLine(i,JVIM.getTempStr()[i].indexOf(args));
+                            new JVIM().setStartLine(i);
+                            break;
+                        }
+                    }
+                    break;
+                case 14:
+                  new todo().saveToClipboard(JVIM.getTempStr()[new JVIM().getTextLine()].toString());
+                  break;
                 case 15:
                     new JVIM().changeBD();
                     break;
                 case 16:
-
+                   //TODO runTime
+                    break;
                 case 17:
                     if (args !=null){
                       String number[] =args.split(",");
                       new JVIM().setTextLine(Integer.parseInt(number[0]),Integer.parseInt(number[1]));
                       new JVIM().setStartLine(Integer.parseInt(number[0]));
+                    }
+                    break;
+                case 18:
+                   JVIM.getTempStr()[new JVIM().getTextLine()].insert(new JVIM().getKickNow(),JOptionPane.showInputDialog("input"));
+                case 19:
+                    //LSP
+                    if (args.equals("")){
+                        new JVIM().setIsLSP();
+                    }else {
+                        CodeLSP.setLSPfile(args);
                     }
                 case 99:
                     System.out.println("error");

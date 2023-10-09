@@ -1,10 +1,8 @@
 package JVIM.code;
 
-import JVIM.JVIM;
 import JVIM.Commend.commend;
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -46,7 +44,7 @@ public class HighLight {
                 String[] words = tempString.split(" ");
                 int theTrue = 0;
                 String TempStr = "";
-                for (int i = 0; i < tempString.length(); i++) {
+                for (int i = 0; i < words.length; i++) {
                     if (words[i] != null) {
                         if (i < 1) {
                             TempStr += words[i];
@@ -99,10 +97,10 @@ public class HighLight {
     public void setCHLfile(String string){
         switch (string){
             case "java":
-                thepath = "JVIM/code/java_CHL";
+                thepath = "JVIM/code/CHL/java_CHL";
                 break;
             case "C":
-                thepath = "JVIM/code/C_CHL";
+                thepath = "JVIM/code/CHL/C_CHL";
                 break;
         }
         try {

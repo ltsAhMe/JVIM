@@ -1,6 +1,7 @@
 package JVIM;
 
 import JVIM.Commend.commend;
+import JVIM.code.CodeLSP;
 import JVIM.code.HighLight;
 
 import javax.swing.*;
@@ -9,11 +10,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
 public class JVIM {
+    static boolean isLSP = false;
     static boolean isRainbow = false;
     static Color textColor = Color.white;
     static String theCHLmode = "java";
@@ -39,6 +40,7 @@ public class JVIM {
     }
 
     public static void init(String title, Dimension Size) {
+        CodeLSP.setLSPfile(theCHLmode);
         todo.fontFile = new commend().readFileFromJar("JVIM/font.ttf");
         TextFont = todo.fontget(13);
         fontMetrics = getPanel().getFontMetrics(TextFont);
@@ -83,15 +85,15 @@ public class JVIM {
                 if (isShadow) {
                     g2d.setColor(new Color(107, 107, 107));
                     for (int i = 0; i < nowShowHow(); i++) {
-                            g2d.drawString(TempString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                        g2d.drawString(TempString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                     }
                 }
                 //text BD
-                if (isBD){
+                if (isBD) {
                     g2d.setColor(new Color(255, 84, 84));
                     g2d.setFont(todo.fontget(14));
                     for (int i = 0; i < nowShowHow(); i++) {
-                            g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                        g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                     }
                 }
                 //text
@@ -99,7 +101,7 @@ public class JVIM {
                     g2d.setFont(TextFont);
                     g2d.setColor(textColor);
                     for (int i = 0; i < nowShowHow(); i++) {
-                            g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                        g2d.drawString(TempString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                     }
                 }
                 //code highlight
@@ -111,20 +113,42 @@ public class JVIM {
                                     if (!TempString[i].substring(s, s + 1).equals(" ")) {
                                         g2d.setColor(new HighLight().colorReader(TempString[i].toString(), s));
                                     }
-                                }else{
-                                   g2d.setColor(todo.getRandomColor());
+                                } else {
+                                    g2d.setColor(todo.getRandomColor());
                                 }
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                                g2d.drawString(TempString[i].substring(s, s + 1), 10 + fontMetrics.stringWidth(TempString[i].substring(0, s)), 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
+                            g2d.drawString(TempString[i].substring(s, s + 1), 10 + fontMetrics.stringWidth(TempString[i].substring(0, s)), 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                         }
                     }
                 }
-                //kick
                 if (isInput) {
+                    //kick
                     g2d.setColor(Color.white);
                     g2d.fillRect(10 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()), 2, fontMetrics.getHeight());
+                    //lsp
+                    if (isLSP) {
+                        if (CodeLSP.checkisCode(TempString[TextLine].toString(), KickNow)) {
+                            //panel
+                            g2d.fillRect(12 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()) + fontMetrics.getHeight(), 100, 90);
+                            //LSP text show
+                            int chooseone = 0;
+                            for (int i = 0; i < 5; i++) {
+                                //choose one like
+                                if (i == chooseone) {
+                                    g2d.setColor(Color.yellow);
+                                    g2d.fillRect(12 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 7 + ((TextLine - startLine) * fontMetrics.getHeight()) + fontMetrics.getHeight() + (i * fontMetrics.getHeight()), 100, fontMetrics.getHeight());
+                                }
+                                //text
+                                String lspString = CodeLSP.getLSP(TempString[TextLine].toString(), KickNow)[i];
+                                if (lspString != null) {
+                                    g2d.setColor(Color.black);
+                                    g2d.drawString(lspString, 12 + fontMetrics.stringWidth(TempString[TextLine].substring(0, KickNow)), 40 + ((TextLine - startLine) * fontMetrics.getHeight()) + (i * fontMetrics.getHeight() - 2));
+                                }
+                            }
+                        }
+                    }
                 }
                 //mode show
                 g2d.setColor(Color.black);
@@ -157,15 +181,7 @@ public class JVIM {
             }
         };
     }
-    public void getRainbow(){
-        isRainbow = !isRainbow;
-    }
-    public void setStartLine(int num){
-        startLine = num;
-    }
-    public void changeBD(){
-        isBD = !isBD;
-    }
+
     private static void PanelgetKey() {
         panel.setFocusable(true);
         panel.addKeyListener(new KeyAdapter() {
@@ -212,7 +228,7 @@ public class JVIM {
                                 if (TempString[TextLine + 1] == null) {
                                     TempString[TextLine + 1] = new StringBuffer();
                                 }
-                                if (TempString[TextLine+1]!=null&& !TempString[TextLine+1].toString().equals("")) {
+                                if (TempString[TextLine + 1] != null && !TempString[TextLine + 1].toString().equals("")) {
                                     StringBuffer[] temp = new StringBuffer[TempString.length];
                                     for (int i = 0; i < TempString.length; i++) {
                                         if (TempString[i] != null) {
@@ -221,15 +237,15 @@ public class JVIM {
                                     }
 
                                     for (int i = 0; i <= nowShowHow(); i++) {
-                                        if (i==0){
-                                            temp[TextLine + 1] = new StringBuffer(TempString[TextLine].substring(KickNow,TempString[TextLine].length()));
-                                        }else {
+                                        if (i == 0) {
+                                            temp[TextLine + 1] = new StringBuffer(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
+                                        } else {
                                             temp[TextLine + 1 + i] = TempString[TextLine + i];
                                         }
                                     }
                                     TempString = temp;
-                                }else {
-                                    TempString[TextLine+1].append(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
+                                } else {
+                                    TempString[TextLine + 1].append(TempString[TextLine].substring(KickNow, TempString[TextLine].length()));
                                 }
                                 TempString[TextLine].delete(KickNow, TempString[TextLine].length());
                                 KickNow = TempString[TextLine + 1].length();
@@ -350,6 +366,22 @@ public class JVIM {
         return s;
     }
 
+    public void getRainbow() {
+        isRainbow = !isRainbow;
+    }
+
+    public void setStartLine(int num) {
+        startLine = num;
+    }
+
+    public void changeBD() {
+        isBD = !isBD;
+    }
+
+    public void setIsLSP() {
+        isLSP = !isLSP;
+    }
+
     public String getNowWhere() {
         return nowWhereis;
     }
@@ -374,16 +406,19 @@ public class JVIM {
     public void changeCodelight() {
         isHighlight = !isHighlight;
     }
-   public void setTextLine(int num,int kick){
-        TextLine=num;
+
+    public void setTextLine(int num, int kick) {
+        TextLine = num;
         KickNow = kick;
-   }
+    }
+
     public void TempStringSet(String str, int line) {
         TempString[line] = new StringBuffer(str);
     }
-    public void TempStringClear(){
+
+    public void TempStringClear() {
         TempString = new StringBuffer[9999];
-        TempString[0] = new StringBuffer("");
+        TempString[0] = new StringBuffer();
     }
 
     private void checkPanelPageDown() {
@@ -392,6 +427,10 @@ public class JVIM {
             startLine++;
             TempString[nowShowHow() + 1] = new StringBuffer();
         }
+    }
+
+    public int getKickNow() {
+        return KickNow;
     }
 
     //Color test = new Color(59, 250, 0);
