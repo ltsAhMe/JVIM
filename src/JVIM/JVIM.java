@@ -69,7 +69,6 @@ public class JVIM {
     public static StringBuffer[] getTempStr() {
         return TempString;
     }
-
     private static JPanel getPanel() {
         return new JPanel() {
             @Override

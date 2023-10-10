@@ -95,14 +95,7 @@ public class HighLight {
         return new Color(r, g, b);
     }
     public void setCHLfile(String string){
-        switch (string){
-            case "java":
-                thepath = "JVIM/code/CHL/java_CHL";
-                break;
-            case "C":
-                thepath = "JVIM/code/CHL/C_CHL";
-                break;
-        }
+                thepath = "JVIM/code/CHL/"+string+ "_CHL";
         try {
             keywordMap = readKeywordMapping(new commend().readFileFromJar(thepath).getPath());
         } catch (IOException e) {

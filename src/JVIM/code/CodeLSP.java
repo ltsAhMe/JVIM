@@ -93,14 +93,7 @@ public class CodeLSP {
         return text.split(",");
     }
     public static void setLSPfile(String thepath){
-        switch (thepath){
-            case "java":
-                thePaths = "JVIM/code/LSP/java_LSP";
-                break;
-            case "C":
-                thePaths = "JVIM/code/LSP/C_LSP";
-                break;
-        }
+                thePaths = "JVIM/code/LSP/"+thepath+"_LSP";
         theLSPfile = new commend().readFileFromJar(thePaths);
     }
 }

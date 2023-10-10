@@ -9,18 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="修了渲染bug 添加paste rainbow jump命令">
-      <change afterPath="$PROJECT_DIR$/src/JVIM/code/CodeLSP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/C_LSP" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/java_LSP" afterDir="false" />
+    <list default="true" id="7b31936c-e243-4706-a51b-3e6d5bce1dde" name="更改" comment="LSP添加">
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/Cshap_CHL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/c++_CHL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/rust_CHL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/Cshap_LSP" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/rust_LSP" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/Commends" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/Commends" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/Commend/commend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/JVIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/JVIM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/code/C_CHL" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/C_CHL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/code/CodeLSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/CodeLSP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/HighLight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/code/java_CHL" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/CHL/java_CHL" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JVIM/todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/todo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JVIM/code/LSP/C_LSP" beforeDir="false" afterPath="$PROJECT_DIR$/src/JVIM/code/LSP/C_LSP" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,19 +49,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/ltsAhMe/Documents/src/JVIM/src/JVIM/code/LSP",
-    "project.structure.last.edited": "工件",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ltsAhMe/Documents/src/JVIM/src/JVIM/code/LSP&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ltsAhMe\Documents\src\JVIM" />
@@ -235,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696813295540</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="LSP添加">
+      <option name="closed" value="true" />
+      <created>1696838331806</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1696838331806</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -262,7 +270,8 @@
     <MESSAGE value="更好的回车" />
     <MESSAGE value="修了bug" />
     <MESSAGE value="修了渲染bug 添加paste rainbow jump命令" />
-    <option name="LAST_COMMIT_MESSAGE" value="修了渲染bug 添加paste rainbow jump命令" />
+    <MESSAGE value="LSP添加" />
+    <option name="LAST_COMMIT_MESSAGE" value="LSP添加" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
