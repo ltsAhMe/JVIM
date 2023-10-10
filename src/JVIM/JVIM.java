@@ -13,25 +13,25 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JVIM {
-    static boolean isLSP = false;
+    static boolean isLSP = true;
     static boolean isRainbow = false;
     static Color textColor = Color.white;
     static String theCHLmode = "java";
     static String nowWhereis = null;
     static StringBuffer CommendInput = new StringBuffer();
     static boolean isCommendInput = false;
-    static boolean isHighlight = false;
+    static boolean isHighlight = true;
     static StringBuffer TempCodeString = new StringBuffer("");
     static StringBuffer[] CodeString = new StringBuffer[9999];
     static JFrame frame;
-    static boolean isShadow = false;
+    static boolean isShadow = true;
     static int startLine = 0;
     static int TextLine = 0;
     static int KickNow = 0;
     static JPanel panel;
     static Font TextFont;
     static boolean isInput = false;
-    static boolean isBD = false;
+    static boolean isBD = true;
     static FontMetrics fontMetrics;
     Color test = new Color(157, 57, 57);
 
