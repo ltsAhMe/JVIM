@@ -8,27 +8,12 @@ import java.io.IOException;
 public class CodeLSP {
     static File theLSPfile = new File("");
     static String thePaths = "";
-    public static boolean checkisCode(String theCode,int where){
+    public static boolean checkisCode(String theCode){
         String[] theLSP = new CodeLSP().getFromFile();
-        String[] words = theCode.split(" ");
-        String TempStr = "";
-        int theTrue = 0;
-        if (theCode.equals("")){
-            return false;
-        }
-        for (int i = 0;i < words.length; i++) {
-            if (i < 1) {
-                TempStr += words[i];
-            } else {
-                TempStr += words[i] + " ";
+            String doneCode = theCode;
+            if (theCode.equals("")){
+                return false;
             }
-            if (where <= TempStr.length()) {
-                theTrue = i;
-                break;
-            }
-        }
-        if (theTrue >= 0 && theTrue < words.length) {
-            String doneCode = words[theTrue];
             for (int i = 0; i < theLSP.length; i++) {
                 if (doneCode.length() < theLSP[i].length()) {
                     if (theLSP[i].substring(0, doneCode.length()).equals(doneCode)) {
@@ -36,32 +21,13 @@ public class CodeLSP {
                     }
                 }
             }
-        }
       return false;
     }
-    public static String[] getLSP(String theCode,int where){
+    public static String[] getLSP(String theCode){
 
        String[] theLSP = new CodeLSP().getFromFile();
-       String[] checkDone = new String[50];
-        String[] words = theCode.split(" ");
-        String TempStr = "";
-        int theTrue = 0;
-//        for (int i=0;i<words.length;i++){
-//            System.out.println(words[i]);
-//        }
-        for (int i = 0;i < words.length; i++) {
-                if (i < 1) {
-                    TempStr += words[i];
-                } else {
-                    TempStr += words[i] + " ";
-                }
-            if (where <= TempStr.length()) {
-                theTrue = i;
-                break;
-            }
-        }
-        if (theTrue >= 0 && theTrue < words.length) {
-            String doneCode = words[theTrue];
+            String[] checkDone=new String[50];
+            String doneCode = theCode;
             int num = 0;
             for (int i = 0; i < theLSP.length; i++) {
                 if (doneCode.length() < theLSP[i].length()) {
@@ -72,8 +38,6 @@ public class CodeLSP {
                 }
             }
             return checkDone;
-        }
-            return new String[]{"","","","",""};
         }
     private String[] getFromFile(){
         String text="";
