@@ -40,6 +40,7 @@ public class JVIM {
     }
 
     public static void init(String title, Dimension Size) {
+
         CodeLSP.setLSPfile(theCHLmode);
         todo.fontFile = new commend().readFileFromJar("JVIM/font.ttf");
         TextFont = todo.fontget(13);
@@ -55,7 +56,7 @@ public class JVIM {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
         frame.setVisible(true);
-        CodeString[0] = new StringBuffer();
+        CodeString[0] = new StringBuffer("");
     }
 
     public static StringBuffer[] getTempStr() {
@@ -75,7 +76,7 @@ public class JVIM {
                 g2d.setFont(TextFont);
                 if (isShadow) {
                     g2d.setColor(new Color(107, 107, 107));
-                    for (int i = 0; i < nowShowHow(); i++) {
+                    for (int i = 0; i < nowShowHow(getTempStr()); i++) {
                         g2d.drawString(CodeString[i].toString(), 12, 18 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                     }
                 }
@@ -83,7 +84,7 @@ public class JVIM {
                 if (isBD) {
                     g2d.setColor(new Color(255, 84, 84));
                     g2d.setFont(todo.fontget(14));
-                    for (int i = 0; i < nowShowHow(); i++) {
+                    for (int i = 0; i < nowShowHow(getTempStr()); i++) {
                         g2d.drawString(CodeString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                     }
                 }
@@ -91,13 +92,13 @@ public class JVIM {
                 if (!isHighlight) {
                     g2d.setFont(TextFont);
                     g2d.setColor(textColor);
-                    for (int i = 0; i < nowShowHow(); i++) {
+                    for (int i = 0; i < nowShowHow(getTempStr()); i++) {
                         g2d.drawString(CodeString[i].toString(), 10, 20 + (i * fontMetrics.getHeight()) - (startLine * fontMetrics.getHeight()));
                     }
                 }
                 //code highlight
                 if (isHighlight) {
-                    for (int i = 0; i < nowShowHow(); i++) {
+                    for (int i = 0; i < nowShowHow(getTempStr()); i++) {
                         for (int s = 0; s < CodeString[i].length(); s++) {
                             try {
                                 if (!isRainbow) {
@@ -193,7 +194,22 @@ public class JVIM {
                                 if (TextLine > 0 && KickNow == 0) {
                                     KickNow = CodeString[TextLine - 1].length();
                                     CodeString[TextLine - 1].append(CodeString[TextLine]);
-                                    CodeString[TextLine] = new StringBuffer();
+
+                                    StringBuffer[] temp = new StringBuffer[CodeString.length];
+
+                                    //init
+                                    for (int i=0;i<nowShowHow(CodeString);i++){
+                                        temp[i] = new StringBuffer(CodeString[i].toString());
+                                    }
+                                    //define
+                                    for (int i=TextLine;i<nowShowHow(CodeString);i++){
+                                        temp[i-1] = new StringBuffer(CodeString[i]);
+                                    }
+                                    //redefine
+                                    for (int i=TextLine;i<nowShowHow(CodeString);i++){
+                                        CodeString[i] = new StringBuffer(temp[i].toString());
+                                    }
+                                    CodeString[nowShowHow(CodeString)] = null;
                                     TextLine--;
                                 }
                                 new JVIM().checkPanelPageUP();
@@ -203,12 +219,14 @@ public class JVIM {
                                 if (KickNow > 0) {
                                     KickNow--;
                                 }
+                                CodeString =new CodeClear().getClearCode(CodeString);
                                 break;
                             //right
                             case KeyEvent.VK_RIGHT:
                                 if (KickNow < CodeString[TextLine].length()) {
                                     KickNow++;
                                 }
+                                CodeString =new CodeClear().getClearCode(CodeString);
                                 break;
                             //off input mode
                             case KeyEvent.VK_ESCAPE:
@@ -227,7 +245,7 @@ public class JVIM {
                                         }
                                     }
 
-                                    for (int i = 0; i <= nowShowHow(); i++) {
+                                    for (int i = 0; i <= nowShowHow(getTempStr()); i++) {
                                         if (i == 0) {
                                             temp[TextLine + 1] = new StringBuffer(CodeString[TextLine].substring(KickNow, CodeString[TextLine].length()));
                                         } else {
@@ -243,6 +261,7 @@ public class JVIM {
 
                                 TextLine++;
                                 new JVIM().checkPanelPageDown();
+                                CodeString =new CodeClear().getClearCode(CodeString);
                                 break;
                             case KeyEvent.VK_UP:
                                 if (TextLine > 0) {
@@ -252,6 +271,7 @@ public class JVIM {
                                     TextLine--;
                                 }
                                 new JVIM().checkPanelPageUP();
+                                CodeString =new CodeClear().getClearCode(CodeString);
                                 break;
                             case KeyEvent.VK_DOWN:
                                 if (CodeString[TextLine + 1] != null) {
@@ -259,8 +279,10 @@ public class JVIM {
                                         KickNow = CodeString[TextLine + 1].length();
                                     }
                                     TextLine++;
+                                    new JVIM().checkPanelPageDown();
+                                    CodeString =new CodeClear().getClearCode(CodeString);
                                 }
-                                new JVIM().checkPanelPageDown();
+
                                 break;
                         }
                         TempCodeString = new StringBuffer("");
@@ -269,11 +291,10 @@ public class JVIM {
                         CodeString[TextLine].insert(KickNow, e.getKeyChar());
                         TempCodeString.append(e.getKeyChar());
                         KickNow++;
-                        if (e.getKeyChar() == ' '){
+                        if (e.getKeyChar() == ' ' || e.getKeyChar() == '.'){
                             TempCodeString = new StringBuffer("");
                         }
                     }
-                    CodeString =new CodeClear().getClearCode(CodeString);
                 } else {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_I:
@@ -349,10 +370,21 @@ public class JVIM {
                 keyCode == KeyEvent.VK_PAGE_DOWN;
     }
 
-    public static int nowShowHow() {
+    public static int nowShowHow(StringBuffer[] input) {
         int s = 0;
-        for (int i = 0; i < CodeString.length; i++) {
-            if (CodeString[i] != null) {
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] != null) {
+                s++;
+            } else {
+                break;
+            }
+        }
+        return s;
+    }
+    public static int nowShowHowString(String[] input) {
+        int s = 0;
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] != null) {
                 s++;
             } else {
                 break;
@@ -420,7 +452,7 @@ public class JVIM {
         if (fontMetrics.getHeight() * (TextLine - startLine) >= frame.getHeight() - 100) {
             System.out.println("down!!");
             startLine++;
-            CodeString[nowShowHow() + 1] = new StringBuffer();
+            CodeString[nowShowHow(getTempStr()) + 1] = new StringBuffer();
         }
     }
 

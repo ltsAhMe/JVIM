@@ -1,5 +1,7 @@
 package JVIM.code;
 import JVIM.Commend.commend;
+import JVIM.JVIM;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,18 +12,35 @@ public class CodeLSP {
     static String thePaths = "";
     public static boolean checkisCode(String theCode){
         String[] theLSP = new CodeLSP().getFromFile();
-            String doneCode = theCode;
-            if (theCode.equals("")){
-                return false;
+        String[] checkDone=new String[50];
+        String doneCode = theCode;
+        int num = 0;
+        if (theCode.equals("")){
+            return false;
+        }
+        for (int i = 0; i < theLSP.length; i++) {
+            if (doneCode.length() < theLSP[i].length()) {
+                if (theLSP[i].substring(0, doneCode.length()).equals(doneCode)) {
+                    checkDone[num] = theLSP[i];
+                    num++;
+                }
             }
-            for (int i = 0; i < theLSP.length; i++) {
-                if (doneCode.length() < theLSP[i].length()) {
-                    if (theLSP[i].substring(0, doneCode.length()).equals(doneCode)) {
-                        return true;
+        }
+        String[] function = CheckCode.getfunctionName();
+        if (function[0]!=null) {
+            for (int i = 0; i < JVIM.nowShowHowString(function); i++) {
+                if (doneCode.length() < function[i].length()) {
+                    if (function[i].substring(0, doneCode.length()).equals(doneCode)) {
+                        checkDone[num] = function[i];
                     }
                 }
             }
-      return false;
+        }
+        if (JVIM.nowShowHowString(checkDone)>0){
+            return true;
+        }else {
+            return false;
+        }
     }
     public static String[] getLSP(String theCode){
 
@@ -34,6 +53,17 @@ public class CodeLSP {
                     if (theLSP[i].substring(0, doneCode.length()).equals(doneCode)) {
                         checkDone[num] = theLSP[i];
                         num++;
+                    }
+                }
+            }
+
+            String[] function = CheckCode.getfunctionName();
+            if (function[0]!=null) {
+                for (int i = 0; i < JVIM.nowShowHowString(function); i++) {
+                    if (doneCode.length() < function[i].length()) {
+                        if (function[i].substring(0, doneCode.length()).equals(doneCode)) {
+                            checkDone[num] = function[i];
+                        }
                     }
                 }
             }

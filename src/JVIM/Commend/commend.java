@@ -102,7 +102,7 @@ public class commend {
                     System.exit(0);
                     break;
                 case 4:
-                    System.out.println("now is "+JVIM.nowShowHow());
+                    System.out.println("now is "+JVIM.nowShowHow(JVIM.getTempStr()));
                     break;
                 case 5:
                     todo.executeCommand(args);
@@ -156,7 +156,7 @@ public class commend {
 
                     break;
                 case 13:
-                    for (int i=0;i<JVIM.nowShowHow();i++){
+                    for (int i=0;i<JVIM.nowShowHow(JVIM.getTempStr());i++){
                         if (JVIM.getTempStr()[i].indexOf(args) != -1){
                             new JVIM().setTextLine(i,JVIM.getTempStr()[i].indexOf(args));
                             new JVIM().setStartLine(i);

@@ -24,7 +24,7 @@ public class todo {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(where));
             System.out.println(theSTR.length);
-            for (int i = 0; i < JVIM.nowShowHow(); i++) {
+            for (int i = 0; i < JVIM.nowShowHow(JVIM.getTempStr()); i++) {
                 writer.write(theSTR[i].toString());
                 writer.newLine();
             }
