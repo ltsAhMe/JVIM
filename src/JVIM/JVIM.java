@@ -27,7 +27,7 @@ public class JVIM {
     static StringBuffer TempCodeString = new StringBuffer("");
     static StringBuffer[] CodeString = new StringBuffer[9999];
     static JFrame frame;
-    static boolean isShadow = true;
+    static boolean isShadow = false;
     static int startLine = 0;
     static int TextLine = 0;
     static int KickNow = 0;
@@ -59,7 +59,7 @@ public class JVIM {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
         frame.setVisible(true);
-        CodeString[0] = new StringBuffer("int mandw");
+        CodeString[0] = new StringBuffer("");
         new JVIM().startAllTimer();
     }
     private void startAllTimer(){
