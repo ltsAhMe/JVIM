@@ -1,5 +1,5 @@
 # SwingVIM
-java swing写的一个简易文本编辑器 没什么好说的
+java swing写的代码编辑器
 ### 使用自己的字体
 替换jar中的font.ttf为你的 例如无法显示中文 请自己替换中文支持字体(默认为JetBrains Mono)
 ### 命令
